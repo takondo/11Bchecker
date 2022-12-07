@@ -1,3 +1,5 @@
+Import-Module ActiveDirectory
+
 $noSET = New-Object -TypeName 'System.Collections.ArrayList'
 $badSET = New-Object -TypeName 'System.Collections.ArrayList'
 $rc4only = New-Object -TypeName 'System.Collections.ArrayList'
