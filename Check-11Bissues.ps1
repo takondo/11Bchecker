@@ -9,7 +9,7 @@ $NoAESKeys = New-Object -TypeName 'System.Collections.ArrayList'
 $computers = Get-ADComputer -filter * -Properties msDS-SupportedEncryptionTypes, operatingSystem, operatingSystemVersion, userAccountControl, passwordLastSet
 $users = Get-ADUser -Filter * -Properties msDS-supportedEncryptionTypes, servicePrincipalName, passwordLastSet
 $dateAESadded = (Get-ADGroup "Read-only Domain Controllers" -Properties WhenCreated).WhenCreated
- 
+
 foreach ($computer in $computers) {
     if (!$computer.Enabled) { continue }
 
@@ -18,8 +18,8 @@ foreach ($computer in $computers) {
         [int]$version = ($computer.OperatingSystemVersion.Split("."))[0]
         if ($version -lt 6) {
             Write-Host "*****************************************"
-            Write-Host "Legacy OS detected: " -NoNewline
-            Write-Host $computer -ForegroundColor Red
+            Write-Host "Legacy OS detected: " -NoNewline -ForegroundColor Red
+            Write-Host $computer 
             Write-Host "This OS is not compatible with the new behavior, and authentication to this computer will fail after installing Windows Update released on November 2022 or newer on DCs."
             continue
         }
@@ -86,7 +86,7 @@ foreach ($user in $users) {
 
 Write-Host "======================================" 
 if ($noSET.Cout -ne 0) {
-    Write-Host "There are $($noSET.Count) objects that do not have msDS-SupportedEncryptionTypes configured."
+    Write-Host "There are $($noSET.Count) objects that do not have msDS-SupportedEncryptionTypes configured." -ForegroundColor Red
     Write-Host "When authenticating to this target, Kerberos will use the setting of DefaultDomainSupportedEncTypes registry on the authenticating DC to determinte supported etypes."
     Write-Host "This defaults to a value of 0x27, which means 'use AES for session keys and RC4 for ticket encryption'"
     Write-Host "If this target server does not support AES, please set msDS-SupportedEncryptionTypes to 4 on this object so that only RC4 is used."
@@ -102,7 +102,7 @@ else {
 
 Write-Host "======================================"
 if ($badSET.Count -ne 0) {
-    Write-Host "There are $($badSET.Count) objects that have msDS-SupportedEncryptionTypes configured, but no encryption protocol is allowed."
+    Write-Host "There are $($badSET.Count) objects that have msDS-SupportedEncryptionTypes configured, but no encryption protocol is allowed." -ForegroundColor Red
     Write-Host "This can cause authentication to/from this object to fail."
     Write-Host "Please either delete the existing msDS-SupportedEncryptionTypes settings, or add supported etypes."
     Write-Host "Example: Add 0x1C to signify support for AES128, AES256, and RC4"
@@ -116,7 +116,8 @@ else {
 
 Write-Host "======================================"
 if ($NoAESKeys.Count -ne 0) {
-    Write-Host "There are $($NoAESKeys.Count) objects that do not have AES Keys generated. This can occur if the account's password has not been changed after adding Server 2008 or newer DCs"
+    Write-Host "There are $($NoAESKeys.Count) objects that do not have AES Keys generated." -ForegroundColor Red
+    Write-Host "This can occur if the account's password has not been changed after adding Server 2008 or newer DCs"
     Write-Host "Authentication to this target can fail if AES is required by either the client or the KDC."
     Write-Host "Please change/reset the accounts' password, and AES keys will be automatically generated." 
     foreach ($obj in $NoAESKeys) {
@@ -129,7 +130,7 @@ else {
 
 Write-Host "======================================"
 if ($rc4only.Count -ne 0) {
-    Write-Host "There are $($rc4only.Count) computers/services that are configured for RC4/DES only."
+    Write-Host "There are $($rc4only.Count) computers/services that are configured for RC4/DES only." -ForegroundColor Red
     Write-Host "Authentication to this target can fail if AES is required by either the client or the KDC."
     Write-Host "Here is the list of objects that are RC4/DES only:"
     foreach ($obj in $rc4only) {
