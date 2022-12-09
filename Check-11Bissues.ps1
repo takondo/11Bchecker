@@ -151,7 +151,7 @@ if ($rc4only.Count -ne 0) {
 }
 
 
-if ($badSET.Count -eq 0 -and $noSET.Count -eq 0 -and $rc4only.Count -eq 0) {
+if ($badSET.Count -eq 0 -and $noSET.Count -eq 0 -and $NoAESKeys.Count -eq 0 -and $rc4only.Count -eq 0) {
     Write-Host "======================================"
     Write-Host "Configurations known to cause Kerberos authentication failures after installing November 2022 update or newer on DCs were not detected." -ForegroundColor Green -BackgroundColor Black
     Write-Host "Pleae contact Microsoft Support if you do see any failures."
