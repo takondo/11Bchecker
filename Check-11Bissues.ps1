@@ -18,7 +18,7 @@ foreach($computer in $computers) {
             Write-Host "*****************************************"
             Write-Host "Legacy OS detected: " -NoNewline
             Write-Host $computer -ForegroundColor Red
-            Write-Host "This OS is not compatible with the new default behavior, and authentication to this computer will fail after installing Windows Update released on November 2022 or newer."
+            Write-Host "This OS is not compatible with the new behavior, and authentication to this computer will fail after installing Windows Update released on November 2022 or newer on DCs."
             continue
         }
     }
@@ -74,20 +74,24 @@ foreach($user in $users) {
     }
 }
 
- 
+Write-Host "======================================" 
 if($noSET.Cout -ne 0) {
-    Write-Host "======================================"
     Write-Host "There are $($noSET.Count) objects that do not have msDS-SupportedEncryptionTypes configured."
-    Write-Host "When authenticating to this target, Kerberos will default to the setting of DefaultDomainSupportedEncTypes registry on the authenticating DC."
+    Write-Host "When authenticating to this target, Kerberos will use the setting of DefaultDomainSupportedEncTypes registry on the authenticating DC to determinte supported etypes."
     Write-Host "This defaults to a value of 0x27, which means 'use AES for session keys and RC4 for ticket encryption'"
-    Write-Host "If this target service does not support AES, please set msDS-SupportedEncryptionTypes to 4 on this object so that only RC4 is used."
+    Write-Host "If this target server does not support AES, please set msDS-SupportedEncryptionTypes to 4 on this object so that only RC4 is used."
     foreach($obj in $noSET) {
         Write-Host "`t"$obj
     }
 }
+else {
+    Write-Host "There were no objects with msDS-SupportedEncryptionTypes not configured."
+    Write-Host "During Kerberos authentication, supported etypes will be determined based on the value of msDS-SupportedEncryptionTypes"
+}
 
+
+Write-Host "======================================"
 if($badSET.Count -ne 0) {
-    Write-Host "======================================"
     Write-Host "There are $($badSET.Count) objects that have msDS-SupportedEncryptionTypes configured, but no encryption protocol is allowed."
     Write-Host "This can cause authentication to/from this object to fail."
     Write-Host "Please either delete the existing msDS-SupportedEncryptionTypes settings, or add supported etypes."
@@ -96,17 +100,21 @@ if($badSET.Count -ne 0) {
         Write-Host "`t"$obj
     }
 }
+else {
+    Write-Host "There were no objects with msDS-SupportedEncryptionTypes configured without any etypes enabled."
+}
+
 
 if($rc4only.Count -ne 0) {
     Write-Host "======================================"
-    Write-Host "There are $($rc4only.Count) computers/services that are configured for RC4/DES only"
-    Write-Host "If you have any clients or DCs that are configured to only support AES, authentication will fail"
+    Write-Host "There are $($rc4only.Count) computers/services that are configured for RC4/DES only."
+    Write-Host "If you have any clients or DCs that are configured to only support AES, authentication will fail."
     Write-Host "Here is the list of objects that are RC4/DES only:"
     foreach($obj in $rc4only) {
         Write-Host "`t"$obj
     }
 
-    Write-Host "`nA common scenario where authentication fails after installing November update on DCs in this condition is if DCs are configured to only support AES"
+    Write-Host "`nA common scenario where authentication fails after installing November 2022 update or newer on DCs in this condition is if DCs are configured to only support AES"
     Write-Host "Example: Setting the 'Configure encryption types allowed for Kerberos' policy to AES only on DCs"
     if($AESonlyDC.Count -eq 0) {
         Write-Host "No DCs were detected that are configured for AES only"
@@ -119,3 +127,10 @@ if($rc4only.Count -ne 0) {
     }
 }
 
+
+
+if($badSET.Count -eq 0 -and $noSET.Count -eq 0 -and $rc4only.Count -eq 0) {
+    Write-Host "======================================"
+    Write-Host "Configurations known to cause Kerberos authentication failures after installing November 2022 update or newer on DCs were not detected."
+    Write-Host "Pleae contact Microsoft Support if you do see any failures."
+}
