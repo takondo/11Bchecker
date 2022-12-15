@@ -173,7 +173,7 @@ else {
 
 Write-Host "======================================"
 if ($rc4only.Count -ne 0) {
-    Write-Host "There are $($rc4only.Count) computers/services that are configured for RC4 only." -ForegroundColor Red
+    Write-Host "There are $($rc4only.Count) objects that are configured for RC4 only." -ForegroundColor Red
     Write-Host "Authentication to this target can fail if AES is required by either the client or the DC."
     Write-Host "We do not recommend the use of RC4. Please consider working with your vendor to upgrade or configure this server to support AES."
     Write-Host "Here are the objects that are configured for RC4 only:"
