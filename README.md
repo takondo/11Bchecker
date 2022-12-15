@@ -9,4 +9,4 @@ Note:
 - DES is assumed to be disabled
 
 ## Reference
-* [KB5021131:](https://support.microsoft.com/en-us/topic/kb5021131-how-to-manage-the-kerberos-protocol-changes-related-to-cve-2022-37966-fd837ac3-cdec-4e76-a6ec-86e67501407d) How to manage the Kerberos protocol changes related to CVE-2022-37966
+- [KB5021131:](https://support.microsoft.com/en-us/topic/kb5021131-how-to-manage-the-kerberos-protocol-changes-related-to-cve-2022-37966-fd837ac3-cdec-4e76-a6ec-86e67501407d) How to manage the Kerberos protocol changes related to CVE-2022-37966
