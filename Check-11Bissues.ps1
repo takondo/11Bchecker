@@ -106,7 +106,7 @@ foreach ($user in $users) {
 
 Write-Host "======================================"
 if ($badSET.Count -ne 0) {
-    Write-Host "There are $($badSET.Count) objects that have msDS-SupportedEncryptionTypes configured, but no etype is enabled." -ForegroundColor Red
+    Write-Host "There are $($badSET.Count) objects that have msDS-SupportedEncryptionTypes configured, but no etypes are enabled." -ForegroundColor Red
     Write-Host "etypes are configured in the low 6 bits of msDS-SupportedEncryptionTypes, and having a value configured without etypes can cause authentication to/from this object to fail."
     Write-Host "Please either delete the existing msDS-SupportedEncryptionTypes settings, or add supported etypes to the existing msDS-SupportedEncryptionTypes value."
     Write-Host "Example: Add 0x1C (or 28 in decimal) to signal support for AES128, AES256, and RC4"
