@@ -2,7 +2,7 @@
 
 This is a sample PowerShell script to help detect potential authentication issues that may occur in an AD environment after installing Windows Update from November 2022 or newer. 
 
-The msDS-SupportedEncryptionTypes attribute that is mentioned in the script is an attribute that can be configured on AD objects such as computers and users to signify the types of encryption types (etypes) that can be used when authenticating to that target server/service. You can use the AD Users and Computers MMC console to edit this value. Please see the reference section for more details on this attribute.
+The msDS-SupportedEncryptionTypes attribute that is mentioned in the script is an attribute that can be configured on AD objects such as computers and users to signify as a bitmap the types of encryption types (etypes) that can be used when authenticating to that target server/service. You can use the AD Users and Computers MMC console to edit this value. Please see the reference section for more details on this attribute. 
 
 ## Usage
 
