@@ -49,7 +49,7 @@ foreach ($computer in $computers) {
     }
 
     if ($computer.passwordlastset -le $dateAESadded) {
-        $NoAESKeys.Add($computer)
+        $NoAESKeys.Add($computer) | Out-Null
     }
 }
 
@@ -85,7 +85,7 @@ foreach ($user in $users) {
 }
 
 Write-Host "======================================" 
-if ($noSET.Cout -ne 0) {
+if ($noSET.Count -ne 0) {
     Write-Host "There are $($noSET.Count) objects that do not have msDS-SupportedEncryptionTypes configured." -ForegroundColor Red
     Write-Host "When authenticating to this target, Kerberos will use the setting of DefaultDomainSupportedEncTypes registry on the authenticating DC to determinte supported etypes."
     Write-Host "This defaults to a value of 0x27, which means 'use AES for session keys and RC4 for ticket encryption'"
