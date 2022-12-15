@@ -80,7 +80,7 @@ foreach ($user in $users) {
     }
 
     if ($user.passwordlastset -le $dateAESadded) {
-        $NoAESKeys.Add($user)
+        $NoAESKeys.Add($user) | Out-Null
     }
 }
 
