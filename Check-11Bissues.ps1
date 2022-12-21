@@ -27,7 +27,7 @@ $hasLegacyOS = $false
 
 $computers = Get-ADComputer -filter * -Properties msDS-SupportedEncryptionTypes, operatingSystem, operatingSystemVersion, userAccountControl, passwordLastSet
 $users = Get-ADUser -Filter * -Properties msDS-supportedEncryptionTypes, servicePrincipalName, passwordLastSet
-$dateAESadded = (Get-ADGroup "Read-only Domain Controllers" -Properties WhenCreated).WhenCreated
+$dateAESadded = (Get-ADGroup -filter * -properties SID,WhenCreated | where-object {$_.SID -like '*-521'}).WhenCreated
 
 foreach ($computer in $computers) {
     if (!$computer.Enabled) { continue }
