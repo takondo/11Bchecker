@@ -1,19 +1,16 @@
 ################################################################################################
 #
-# THIS CODE-SAMPLE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED
-# OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR
-# FITNESS FOR A PARTICULAR PURPOSE.
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
 #
-# This sample is not supported under any Microsoft standard support program or service.
-# The script is provided AS IS without warranty of any kind. Microsoft further disclaims all
-# implied warranties including, without limitation, any implied warranties of merchantability
-# or of fitness for a particular purpose. The entire risk arising out of the use or performance
-# of the sample and documentation remains with you. In no event shall Microsoft, its authors,
-# or anyone else involved in the creation, production, or delivery of the script be liable for
-# any damages whatsoever (including, without limitation, damages for loss of business profits,
-# business interruption, loss of business information, or other pecuniary loss) arising out of
-# the use of or inability to use the sample or documentation, even if Microsoft has been advised
-# of the possibility of such damages.
+# THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
 ################################################################################################
 
 Import-Module ActiveDirectory
