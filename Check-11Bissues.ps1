@@ -99,7 +99,7 @@ foreach ($user in $users) {
         }
     }
 
-    if ($user.passwordlastset -and $user.passwordlastset -le $dateAESadded) {
+    if (($user.passwordlastset -le $dateAESadded) -and ($user.passwordlastset -ne $null)) {
         $NoAESKeys.Add($user) | Out-Null
     }
 }
