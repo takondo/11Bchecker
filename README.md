@@ -8,9 +8,13 @@ The msDS-SupportedEncryptionTypes attribute that is mentioned in the script is a
 
 Run the script in PowerShell with domain administrator privileges from a machine with AD RSAT tools installed, such as on a domain controller. The script will output any detected compatibility issues found in the domain related to changes made for CVE-2022-37966.
 
-Note:
-- This will enumerate every user and computer object in your AD environment. This may take some time to complete.
-- DES is assumed to be disabled
+Note that this will enumerate every user and computer object in your AD environment. This may take some time to complete. For very large AD environments, consider limiting the number of objects queried at once by specifying an OU with the SearchBase option in Get-ADComputer and Get-ADUser. By default, the query is recursive and any child OUs will be queried asd well.
+
+Example:
+```
+$computers = Get-ADComputer -filter * -Properties msDS-SupportedEncryptionTypes, operatingSystem, operatingSystemVersion, userAccountControl, passwordLastSet -SearchBase "OU=OU1,DC=example,DC=domain"
+$users = Get-ADUser -Filter * -Properties msDS-supportedEncryptionTypes, servicePrincipalName, passwordLastSet -SearchBase "OU=OU1,DC=example,DC=domain"
+```
 
 ## Reference
 
