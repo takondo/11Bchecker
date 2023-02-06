@@ -12,8 +12,8 @@ Note that this will enumerate every user and computer object in your AD environm
 
 Example:
 ```
-$computers = Get-ADComputer -filter * -Properties msDS-SupportedEncryptionTypes,operatingSystem,operatingSystemVersion,userAccountControl,passwordLastSet -SearchBase "OU=OU1,DC=example,DC=domain"
-$users = Get-ADUser -Filter * -Properties msDS-supportedEncryptionTypes,servicePrincipalName,passwordLastSet -SearchBase "OU=OU1,DC=example,DC=domain"
+$computers = Get-ADComputer -filter * -SearchBase "OU=OU1,DC=example,DC=domain" -Properties msDS-SupportedEncryptionTypes,operatingSystem,operatingSystemVersion,userAccountControl,passwordLastSet
+$users = Get-ADUser -Filter * -SearchBase "OU=OU1,DC=example,DC=domain" -Properties msDS-supportedEncryptionTypes,servicePrincipalName,passwordLastSet
 ```
 
 ## Reference
