@@ -4,6 +4,8 @@ This is a sample PowerShell script to help detect potential authentication issue
 
 The msDS-SupportedEncryptionTypes attribute that is mentioned in the script is an attribute that can be configured on AD objects such as computers and users to signify as a bitmap the types of encryption types (etypes) that can be used when authenticating to that target server/service. You can use the AD Users and Computers MMC console to edit this value. Please see the reference section for more details on this attribute. 
 
+Microsoft has verified and fixed multiple known issues with the original November Winodws Update. It is recommended to install Windows Update released January 2023 (or newer) to avoid hitting these known issues.
+
 ## Usage
 
 Run the script in PowerShell with domain administrator privileges from a machine with AD RSAT tools installed, such as on a domain controller. The script will output any detected compatibility issues found in the domain related to changes made for CVE-2022-37966.
