@@ -22,6 +22,13 @@ $AESonlyDC = New-Object -TypeName 'System.Collections.ArrayList'
 $NoAESKeys = New-Object -TypeName 'System.Collections.ArrayList'
 $hasLegacyOS = $false
 
+# Specify output file full path here
+$transcriptOutput = ""
+
+If($transcriptOutput -ne "") {
+    Start-Transcript $transcriptOutput
+}
+
 $computers = Get-ADComputer -filter * -Properties msDS-SupportedEncryptionTypes, operatingSystem, operatingSystemVersion, userAccountControl, passwordLastSet
 $users = Get-ADUser -Filter * -Properties msDS-supportedEncryptionTypes, servicePrincipalName, passwordLastSet
 $dateAESadded = (Get-ADGroup -filter * -properties SID,WhenCreated | where-object {$_.SID -like '*-521'}).WhenCreated
@@ -188,4 +195,8 @@ if (!$hasLegacyOS -and $badSET.Count -eq 0 -and $noSET.Count -eq 0 -and $NoAESKe
     Write-Host "======================================"
     Write-Host "Configurations known to cause Kerberos authentication failures after installing November 2022 update or newer on DCs were not detected." -ForegroundColor Green -BackgroundColor Black
     Write-Host "Please contact Microsoft Support if you do see any failures after updating your DCs."
+}
+
+If($transcriptOutput -ne "") {
+    Stop-Transcript
 }
