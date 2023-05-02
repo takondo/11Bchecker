@@ -146,11 +146,12 @@ if ($AESonlyDC.Count -eq 0) {
     Write-Host "No DCs were detected that are configured for AES only"
 }
 else {
-    Write-Host "DCs with RC4 disabled detected."
+    Write-Host "DCs with AES enabled and RC4 disabled detected."
     Write-Host "In this environment, Kerberos authentication can fail if the target server/service does not have msDS-SupportedEncryptionTypes configured,"
     Write-Host "or has configured msDS-SupportedEncryptionTypes and has explitcitly enabled only RC4."
     Write-Host "Setting the DefaultDomainSupportedEncTypes registry value on DCs to 0x18 will set the default supported etypes to AES only,"
-    Write-Host "and may prevent Kerberos authentication issues due to unexpected RC4 use after installing November 2022 update or newer on DCs."
+    Write-Host "and may prevent Kerberos authentication issues due to unexpected RC4 use after installing November 2022 or December 2022 update on DCs."
+    Write-Host "Windows Update released January 10, 2023 addresses this, so if you are installing the January update or newer to your DCs this configuration should not cause any issues."
     Write-Host "Here are the DCs that have RC4 disabled"
     foreach ($obj in $AESonlyDC) {
         Write-Host "`t"$obj
